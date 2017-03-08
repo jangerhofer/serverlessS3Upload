@@ -1,0 +1,41 @@
+service: imageUploadDemo
+
+provider:
+  name: aws
+  runtime: nodejs4.3
+  # Provide permissions for this service to manipulate S3.
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action:
+        - "s3:*"
+      Resource: "arn:aws:s3:::[bucketName]/*"
+
+# Expose function to public API for POST requests.
+functions:
+  requestUploadURL:
+    handler: handler.requestUploadURL
+    events:
+      - http:
+          path: requestUploadURL
+          method: post
+          cors: true
+
+# Give service access to the specific S3 bucket.
+resources:
+  Resources:
+    UploadBucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: [bucketName]
+        AccessControl: PublicRead
+        CorsConfiguration:
+          CorsRules:
+          - AllowedMethods:
+            - GET
+            - PUT
+            - POST
+            - HEAD
+            AllowedOrigins:
+            - "*"
+            AllowedHeaders:
+            - "*"

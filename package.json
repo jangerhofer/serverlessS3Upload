@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "aws-sdk": "^2.24.0",
+    "query-string": "^4.3.2"
+  }
+}
