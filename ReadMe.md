@@ -13,9 +13,9 @@ This model takes a fair bit of load off our Lambda functions without sacrificing
 There are a plethora of good reasons to use S3 to store your application's file uploads and you can find a much more exhaustive rundown with a quick Google search than I could hope to describe here.  In short, S3 takes all the fretting out of storing, serving up, and backing up you application's files.
 
 ## Public Link Mechanism
-Line 23 in `handler.js`: `var uploadURL = s3.getSignedUrl('putObject', s3Params);`
+[Line 23 in `handler.js`](https://github.com/jangerhofer/serverlessS3Upload/blob/master/handler.js#L23): `var uploadURL = s3.getSignedUrl('putObject', s3Params);`
 
-[This method](http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#getSignedUrl-property) asks S3 to generate a single-use link that will allow a browser that is NOT authenticated with AWS to upload a specific file (as specified by the `POST` request outlined below) to the application's S3 bucket.  That way, the file being uploaded never touches the Lambda server and instead goes directly from
+[This method](http://docs.aws.amazon.com/AWSJavaScriptSDK/latest/AWS/S3.html#getSignedUrl-property) asks S3 to generate a single-use link that will allow a browser that is NOT authenticated with AWS to upload a specific file (as specified by the `POST` request outlined below) to the application's S3 bucket.  That way, the file being uploaded never touches the Lambda server and instead goes directly from the browser into storage.
 
 ## Usage
 _Assuming AWS credentials and Serverless are already configured properly._
