@@ -6,7 +6,10 @@ var queryString = require('query-string');
 module.exports.requestUploadURL = (event, context, callback) => {
 
   // Create new S3 instance to handle our request for a new upload URL.
-  var s3 = new AWS.S3();
+  // Using signatureVersion v4 allows authenticating inbound API requests to AWS services.
+  const s3 = new AWS.S3({
+    signatureVersion: 'v4'
+  });
 
   // Parse out the parameters of the file the client would like to upload.
   var params = queryString.parse(event.body)
